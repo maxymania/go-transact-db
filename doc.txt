@@ -1,0 +1,45 @@
+PACKAGE
+
+package transactdb
+    import "transactdb"
+
+
+TYPES
+
+type Database struct {
+    DB *godbm.HashDB
+    // contains filtered or unexported fields
+}
+
+func CreateDB(path string, nbuckets uint32) (*Database, error)
+    Creates a new database
+
+func OpenDB(path string) (*Database, error)
+    Opens an existing database
+
+func (db *Database) NewTransaction() *Transaction
+    Creates a new Transaction Object
+
+type Transaction struct {
+    *Database
+    // contains filtered or unexported fields
+}
+    A Transaction On a Database
+
+func (t *Transaction) Clear()
+    Clears the Transaction Buffer. This is like Retry
+
+func (t *Transaction) Commit() bool
+    Commits a Transaction and returns true on success
+
+func (t *Transaction) Read(k string) ([]byte, bool)
+    Reads a Record
+
+func (t *Transaction) Write(k string, v []byte)
+    Writes a Record
+
+
+SUBDIRECTORIES
+
+	godbm
+
